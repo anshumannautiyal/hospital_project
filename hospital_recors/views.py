@@ -70,6 +70,8 @@ def open(request):
 			print noons.id
 			noon_dict[noons.id] = noons.date
 		return HttpResponse(json.dumps(noon_dict))
+	comp_dict = compare()
+	context['comp_dict'] = comp_dict
 	return render_to_response('hospital_recors/home.html',context)
 
 def make_new_voyage(ship_id,voyage_no):
