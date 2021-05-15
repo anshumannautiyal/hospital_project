@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- JavaScript Bundle with Popper -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<title>Welcome</title>
+</head>
+<style type="text/css">
+
+	.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+		background-color: white !important
+	}
+	input[type=radio] {
+    border: 0px;
+    width: 100%;
+    height: 2em;
+}
+	.form-control{
+		background-color: #2fc8d06b !important
+		/*border:1px solid black;*/
+	}
+	input{
+		border-radius: 6px;
+		border-color:white;
+	}
+	select{
+		border-radius: 6px;
+		border-color:white;
+	}
+</style>
+<body>
+	<table width="100%">
+		<tr>
+			<td style="width: 13%"></td>
+			<td><div class="col-lg-12 col-sm-12 col-md-12" style="background-color: rgb(238, 238, 238);">
+		<div class="row col-lg-12" >
+			<h1 style="text-align: center;">Welcome to Base Optimizeation</h1>
+		</div>
+		
+		<div class="row col-lg-12 col-md-12 col-sm-12 jumbotron">
+			<nav>
+			  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#ship_entry" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Ship Entry</button>
+			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#voyage_details" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Voyage Details</button>
+			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#report" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Reports</button>
+			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#ideal_cons" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Conditions</button>
+			  </div>
+			</nav>
+			<div class="tab-content" id="nav-tabContent">
+			  <div class="tab-pane fade show active" id="ship_entry" role="tabpanel" aria-labelledby="nav-home-tab">
+			  	<div class=" col-lg-12 col-md-12 col-sm-12">
+			  		<div class=" col-lg-12 form-control" style="padding-top: 15px;margin-top: 40px" >
+			  			<h4>Enroll New Ship <i style="color: blue" class="fa fa-ship" aria-hidden="true"></i></h4>
+			  			<label>Ship Name</label>
+			  			<input type="text" id="ship_name" autocomplete="off">
+			  			<label>Last Service</label>
+			  			<input type="date" id="last_service" autocomplete="off">
+			  			<button class="btn" id="enroll_new_ship" style="background-color: blue; padding-top: 0px;padding-bottom:0px;margin-left: 5px;color:white">Enroll New Ship</button>
+			  		</div>
+			  		<!-- <hr> -->	
+			  		<div class="col-lg-12 form-control" style="margin-top: 40px;padding-top: 15px">
+			  			<h4>Make Voyage of ship <i style="color: blue" class="fa fa-map" aria-hidden="true"></i></h4>
+			  			<label>Ship Name</label>
+			  			<select id="select_voy_ship">
+			  				<option value="0">Select Ship</option>
+			  				{%for ship in ship_obj%}
+			  				<option value={{ship.id}}>{{ship.name}}</option>
+			  				{%endfor%}
+			  			</select>
+			  			<label>Voyage No</label>
+			  			<input type="text" id="voyage_no">
+			  			<button class="btn" id="make_voyage"  style="background-color: blue; padding-top: 0px;padding-bottom:0px;margin-left: 5px;color:white">Make Voyage</button>
+			  		</div>
+			  		<!-- <hr> -->
+			  		<div class="form-control" style="margin-top: 40px"> 
+			  		<div class="col-lg-12" style="padding-top: 15px">
+			  			<h4>Noon Details Of Voyage <i style="color: blue" class="fa fa-file-code-o" aria-hidden="true"></i></h4>
+			  			<label>Ship Name : </label>
+			  			<select id="select_ship">
+			  				<option value="0">Select Ship</option>
+			  				{%for ship in ship_obj%}
+			  				<option value={{ship.id}}>{{ship.name}}</option>
+			  				{%endfor%}
+			  			</select>
+			  			<label>Voyage No : </label>
+			  			<select id="select_voyage">
+			  				<option value="0">Select Voyage No</option>
+			  			</select>
+			  			<label>Noon Date : </label>
+			  			<input type="date" id="noon_date" autocomplete="off">			  			
+			  		</div>
+			  		<div class="col-lg-12">
+			  			<label>Speed (Kts) : </label>
+			  			<input type="text" id="speed" style="width: 50px" autocomplete="off">
+			  			<label>Consumpitons (MT) : </label>
+			  			<input type="text" id="cons" style="width: 50px" autocomplete="off">
+			  			<label>Currents</label>
+			  			<input type="text" id="currents" style="width: 150px">
+			  			<label>Winds</label>
+			  			<input type="text" id="winds" style="width: 150px">
+			  			<button class="btn" id="make_noon"  style="background-color: blue; padding-top: 0px;padding-bottom:0px;margin-left: 5px;color:white">Submit Noon Report</button>
+			  		</div>
+			  		</div>
+
+			  	</div>
+			  	
+			  </div>
+			  <div class="tab-pane fade" id="voyage_details" role="tabpanel" aria-labelledby="nav-profile-tab">
+			  	<div class="col-lg-12 form-control" style="margin-top: 40px">
+			  		<label>Ship</label>
+			  		<select id="select_ship_vd">
+			  			<option>Select Ship</option>
+			  			{%for ship in ship_obj%}
+			  			<option value={{ship.id}}>{{ship.name}}</option>
+			  			{%endfor%}
+			  		</select>
+			  		<label>Voyage No</label>
+			  		<select id="select_voyage_vd">
+			  			<option>Select Voyage</option>
+			  		</select>
+			  		<div>
+			  		<button class="btn" id="noon_date_vd_submit" style="background-color: blue; padding-top: 0px;padding-bottom:0px;margin-left: 5px;color:white">Click to view noon report</button>
+			  		</div>
+			  	</div>
+			  	<div class="col-lg-12 form-control" style="display: none;margin-top: 40px" id="noon_table_div" > 
+			  		<table>
+			  			<tr id="radio">
+			  			</tr>
+			  			<tr id="radio_date">
+			  			</tr>
+			  		</table>
+			  		<table width="70% " style="display: none" id="noon_table">
+			  			<tr>
+			  				<td>Speed</td>
+			  				<td>Consumptions</td>
+			  				<td>Good Ship Consumptions</td>
+			  			</tr>
+			  			<tr>
+			  				<td id="speed_vd"></td>
+			  				<td id="cons_vd"></td>
+			  				<td id="good_speed_cons_vd"></td>
+			  			</tr>
+			  			<tr>
+			  				<td>Currents</td>
+			  				<td>Winds</td>
+			  			</tr>
+			  			<tr>
+			  				<td id="currents_vd"></td>
+			  				<td id="winds_vd"></td>
+			  			</tr>
+			  		</table>
+			  	</div>
+
+
+			  </div>
+			  <div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+			  <div class="tab-pane fade" id="ideal_cons" role="tabpanel" aria-labelledby="nav-contact-tab">
+			  	
+			  	<table width="100%">
+			  		<tr>
+			  			<td style="width:5%"></td>
+			  			<td>Speed</td>
+			  			<td>Consumpitons</td>
+			  			<td style="width: 20%"></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>7.0</td>
+			  			<td>18MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>8.0</td>
+			  			<td>18MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>9.0</td>
+			  			<td>19MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>10.0</td>
+			  			<td>21MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>11.0</td>
+			  			<td>22MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>12.0</td>
+			  			<td>25MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>12.0</td>
+			  			<td>25MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>13.0</td>
+			  			<td>27MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>14.0</td>
+			  			<td>29MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>15.0</td>
+			  			<td>31MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>16.0</td>
+			  			<td>37MT</td>
+			  			<td></td>
+			  		</tr>
+			  		<tr>
+			  			<td></td>
+			  			<td>17.0</td>
+			  			<td>41MT</td>
+			  			<td></td>
+			  		</tr>
+			  		
+			  	</table>
+
+			  </div>
+			</div>
+		</div>
+	
+
+	</td>
+	<td style="width: 13%"></td>
+		</tr>
+	</table>
+	
+		<div class="col-lg-1">
+			<!-- {{ship_obj}} -->
+		</div>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+$(document).on('click','#enroll_new_ship',function(){
+	// ship_name = $('#ship_name').val()
+	// voyage_no = $('#').val()
+	if ($('#ship_name').val() == ''){
+		alert('Enter Ship Name')
+	}
+	else if($('#last_service').val() == ''){
+		alert('Enter Last Service Date')
+	}
+	else{
+		console.log($('#ship_name').val(),"ship name value")
+	$.ajax({
+		type:'GET',
+		data:{
+			ship_name :$('#ship_name').val(),
+			last_service :$('#last_service').val(),
+		},
+
+		url:'/open',
+		success:function(data){
+			alert('Ship Enrolled')
+			// location.reload()
+			window.open('/open','_self')
+		},
+		error:function(err){
+			alert(JSON.stringify(err))
+		}
+	})	
+	}
+})
+$(document).on('click','#make_voyage',function(){
+	ship_id = $('#select_voy_ship').val()
+	voyage_no = $('#voyage_no').val()
+	alert('vopyaes')
+	if (ship_id == '0'){
+		alert('Select Ship')
+	}
+	else if(voyage_no == ''){
+		alert('Enter Voyage No')
+	}
+	else{
+	$.ajax({
+		type:'GET',
+		data:{
+			ship_id:ship_id,
+			voyage_no:voyage_no,
+		},
+		url:'/open',
+		success:function(data){
+			alert('done')
+			window.open('/open','_self')
+		},
+		error:function(err){
+			console.log((err))
+		}
+	})	
+	}
+})	
+$(document).on('click','#noon_date_vd_submit',function(){
+	// alert('hey')
+	$('#radio').empty()
+	$('#radio_date').empty()
+	$('#noon_table').css('display','')
+	$('#noon_table_div').css('display','')
+	$('#speed_vd').html('')
+$('#cons_vd').html('')
+$('#good_speed_cons_vd').html('')
+$('#currents_vd').html('')
+$('#winds_vd').html('')
+	$.ajax({
+		url:'/open',
+		type:'get',
+		data:{
+			voyage_id_vd : $('#select_voyage_vd').val()
+		},
+		// datatype:json,
+		success:function(data){
+			data=JSON.parse(data)
+			console.log(data)
+			for (var key in data){
+			$('#radio').append('<td><input onclick= "noon_date('+key+')" style="width: 110%" type="radio" name="date_noon"></td>')
+			$('#radio_date').append('<td>'+data[key]+'</td>')
+			}
+		},
+		error:function(err){
+
+		}
+	})
+
+})
+$(document).on('change','#select_ship',function(){
+	ship_id = $('#select_ship').val()
+	alert('alsidh')
+	$.ajax({
+		url:'/open',
+		type:'get',
+		data:{
+			ship_id_noon :ship_id,
+		},
+		success:function(data){
+			var voyage_dict = JSON.parse(data)
+			$('#select_voyage').empty()
+			$('#select_voyage').append("<option value=0>Select Voyage No</option>")
+			for (var key in voyage_dict){
+				console.log(key,':',voyage_dict[key])
+				$('#select_voyage').append("<option value="+key+">"+voyage_dict[key]+'</option>')
+			}
+		},	
+		error:function(err){
+
+		},
+	})
+})
+$(document).on('change','#select_ship_vd',function(){
+	ship_id = $('#select_ship_vd').val()
+	$('#select_voyage_vd').empty()
+	$('#select_voyage_vd').append("<option value=0>Select Voyage No</option>")
+	$.ajax({
+		url:'/open',
+		type:'get',
+		data:{
+			ship_id_noon :ship_id,
+		},
+		success:function(data){
+			alert('lbass')
+			var voyage_dict = JSON.parse(data)
+			for (var key in voyage_dict){
+				console.log(key,':',voyage_dict[key])
+				$('#select_voyage_vd').append("<option value="+key+">"+voyage_dict[key]+'</option>')
+			}
+		},	
+		error:function(err){
+
+		},
+	})
+})
+$(document).on('click','#make_noon',function(){
+	if($('#select_ship').val() == 0){
+		alert('Select Ship')
+	}
+	else if ($('#select_voyage').val() == 0){
+		alert('Select Voyage')
+	}
+	else if($('#noon_date').val() == ''){
+		alert('Enter Date')
+	}
+	else if($('#speed').val() == ''){
+		alert('Enter Speed')
+	}
+	else if ($('#cons').val() == ''){
+		alert('Enter Consumptions')
+	}
+	else if($('#currents').val() == ''){
+		alert('Enter Currents')
+	}
+	else if($('#winds').val() == ''){
+		alert('Enter Winds')
+	}
+	else{
+	$.ajax({
+		url:'/open',
+		type:'get',
+		data:{
+			voyage_id_noon : $('#select_voyage').val(),
+			cons 		   : $('#cons').val(),
+			winds 		   : $('#winds').val(),
+			currents 	   : $('#currents').val(),
+			noon_date 	   : $('#noon_date').val(),
+			speed 		   : $('#speed').val(),
+		},
+		success:function(data){
+			alert('done')
+		},
+		error:function(err){
+
+		},
+
+	})
+	}
+})
+function noon_date(noon_id){
+	console.log(noon_id,'=====noon_id')	
+
+	$.ajax({
+		url:'/open',
+		type:'get',
+		data:{
+			noon_id : noon_id
+		},
+		success:function(data){
+			data = JSON.parse(data)
+			// for(var key in data){
+			console.log(data['speed'],"=====")
+				$('#speed_vd').html(data['speed'])
+				$('#cons_vd').html(data['cons'])
+				$('#good_speed_cons_vd').html(data['good_cons'])
+				$('#currents_vd').html(data['currents'])
+				$('#winds_vd').html(data['winds'])
+			// }
+		},
+		error:function(data){
+
+		}
+	})
+}
+window_height = $(window).height();
+$('#voyage_details').css('height',window_height)
+$('#ship_entry').css('height',window_height)
+$('#report').css('height',window_height)
+$('#ideal_cons').css('height',window_height)
+</script>
