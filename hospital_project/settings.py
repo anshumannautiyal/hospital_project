@@ -26,8 +26,8 @@ SECRET_KEY = 'v4cyiqhplvwt%2p*fag%_os@xz%-+f$h&@k9n@ts91^4k=k834'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+# from django.core.wsgi import get_wsgi_application
+# application = get_wsgi_application()
 
 # Application definition
 
