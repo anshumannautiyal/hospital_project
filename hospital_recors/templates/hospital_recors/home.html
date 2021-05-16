@@ -11,19 +11,24 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    
 	<title>Welcome</title>
 </head>
 <style type="text/css">
 
 	.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
-		background-color: white !important
+		background-color: white !important;
 	}
 /*		input[type=radio] {
     border: 0px;
     width: 100%;
     height: 2em;
-}*/
+}*/.odd{
+	background-color: #6a6ae0e6 !important;
+	color: white;
+}
 	.form-control{
 		background-color: #fffdfab3 !important
 		/*border:1px solid black;*/
@@ -51,7 +56,7 @@
 			  <div class="nav nav-tabs" id="nav-tab" role="tablist">
 			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#ship_entry" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Ship Entry</button>
 			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#voyage_details" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Voyage Details</button>
-			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#report" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Reports</button>
+			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#ships_enrolled" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Ships Enrolled</button>
 			    <button style="background-color: yellow;border-top-right-radius: 10px;border-top-left-radius: 10px" class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#ideal_cons" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Conditions</button>
 			  </div>
 			</nav>
@@ -70,7 +75,7 @@
 			  		<div class="col-lg-12 col-sm-12 col-md-12 form-control" style="margin-top: 40px;padding-top: 15px">
 			  			<h4>Make Voyage of ship <i style="color: blue" class="fa fa-map" aria-hidden="true"></i></h4>
 			  			<label>Ship Name</label>
-			  			<select id="select_voy_ship">
+			  			<select id="select_voy_ship" class="chosen-select">
 			  				<option value="0">Select Ship</option>
 			  				{%for ship in ship_obj%}
 			  				<option value={{ship.id}}>{{ship.name}}</option>
@@ -85,14 +90,14 @@
 			  		<div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 15px">
 			  			<h4>Noon Details Of Voyage <i style="color: blue" class="fa fa-file-code-o" aria-hidden="true"></i></h4>
 			  			<label>Ship Name : </label>
-			  			<select id="select_ship">
+			  			<select id="select_ship" class="chosen-select">
 			  				<option value="0">Select Ship</option>
 			  				{%for ship in ship_obj%}
 			  				<option value={{ship.id}}>{{ship.name}}</option>
 			  				{%endfor%}
 			  			</select>
 			  			<label>Voyage No : </label>
-			  			<select id="select_voyage">
+			  			<select id="select_voyage" class="chosen-select">
 			  				<option value="0">Select Voyage No</option>
 			  			</select>
 			  			<label>Noon Date : </label>
@@ -117,14 +122,14 @@
 			  <div class="tab-pane fade" id="voyage_details" role="tabpanel" aria-labelledby="nav-profile-tab">
 			  	<div class="col-lg-12 col-md-12 col-sm-12 form-control" style="margin-top: 40px">
 			  		<label>Ship</label>
-			  		<select id="select_ship_vd">
+			  		<select id="select_ship_vd" class="chosen-select">
 			  			<option>Select Ship</option>
 			  			{%for ship in ship_obj%}
 			  			<option value={{ship.id}}>{{ship.name}}</option>
 			  			{%endfor%}
 			  		</select>
 			  		<label>Voyage No</label>
-			  		<select id="select_voyage_vd">
+			  		<select id="select_voyage_vd" class="chosen-select">
 			  			<option>Select Voyage</option>
 			  		</select>
 			  		<div>
@@ -162,10 +167,27 @@
 
 
 			  </div>
-			  <div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+			  <div class="tab-pane fade" id="ships_enrolled" role="tabpanel" aria-labelledby="nav-contact-tab">
+			  	<div class="form-control">
+			  		<table id="ship_table">
+			  		<thead>
+			  			<th>Ship Name</th>
+			  			<th>Last Service Date</th>
+			  		</thead>
+			  		<tbody>
+			  	{%for ships in ship_obj%}
+			  			<tr>
+			  				<td>{{ships.name}}</td>
+			  				<td>{{ships.last_service}}</td>
+			  			</tr>
+			  	{%endfor%}
+			  		</tbody>
+			  	</table>
+			  	</div>
+			  </div>
 			  <div class="tab-pane fade" id="ideal_cons" role="tabpanel" aria-labelledby="nav-contact-tab">
 			  	<div class="form-control">
-			  		<table width="100%">
+			  		<table width="100%" id="cons_table">
 				  		<tr>
 				  			<td style="width:5%"></td>
 				  			<td>Speed</td>
@@ -201,6 +223,12 @@
 
 
 <script type="text/javascript">
+$(document).ready( function () {
+$('#ship_table').DataTable();
+} );
+$(document).ready( function () {
+$('#cons_table').DataTable();
+} );
 $(document).on('click','#enroll_new_ship',function(){
 	// ship_name = $('#ship_name').val()
 	// voyage_no = $('#').val()
@@ -423,6 +451,6 @@ function noon_date(noon_id){
 window_height = $(window).height();
 $('#voyage_details').css('height',window_height)
 $('#ship_entry').css('height',window_height)
-$('#report').css('height',window_height)
+$('#ships_enrolled').css('height',window_height)
 $('#ideal_cons').css('height',window_height)
 </script>
