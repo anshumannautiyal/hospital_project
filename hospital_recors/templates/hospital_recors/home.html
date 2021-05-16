@@ -143,6 +143,7 @@
 			  			<tr id="radio_date">
 			  			</tr>
 			  		</table>
+			  		<hr>
 			  		<table width="70% " style="display: none" id="noon_table">
 			  			<tr>
 			  				<td>Speed</td>
@@ -178,7 +179,7 @@
 			  	{%for ships in ship_obj%}
 			  			<tr>
 			  				<td>{{ships.name}}</td>
-			  				<td>{{ships.last_service}}</td>
+			  				<td>{{ships.last_service|date:'d M, Y'}}</td>
 			  			</tr>
 			  	{%endfor%}
 			  		</tbody>
@@ -206,6 +207,7 @@
 			  	</div>
 			  </div>
 			</div>
+
 		</div>
 	
 
@@ -225,9 +227,8 @@
 <script type="text/javascript">
 $(document).ready( function () {
 $('#ship_table').DataTable();
-} );
-$(document).ready( function () {
 $('#cons_table').DataTable();
+$('#noon_table').DataTable();
 } );
 $(document).on('click','#enroll_new_ship',function(){
 	// ship_name = $('#ship_name').val()
@@ -294,10 +295,10 @@ $(document).on('click','#noon_date_vd_submit',function(){
 	$('#noon_table').css('display','')
 	$('#noon_table_div').css('display','')
 	$('#speed_vd').html('')
-$('#cons_vd').html('')
-$('#good_speed_cons_vd').html('')
-$('#currents_vd').html('')
-$('#winds_vd').html('')
+	$('#cssons_vd').html('')
+	$('#good_speed_cons_vd').html('')
+	$('#currents_vd').html('')
+	$('#winds_vd').html('')
 	$.ajax({
 		url:'/open',
 		type:'get',
@@ -321,7 +322,7 @@ $('#winds_vd').html('')
 })
 $(document).on('change','#select_ship',function(){
 	ship_id = $('#select_ship').val()
-	alert('alsidh')
+	// alert('alsidh')
 	$.ajax({
 		url:'/open',
 		type:'get',
@@ -353,7 +354,7 @@ $(document).on('change','#select_ship_vd',function(){
 			ship_id_noon :ship_id,
 		},
 		success:function(data){
-			alert('lbass')
+			// alert('lbass')
 			var voyage_dict = JSON.parse(data)
 			for (var key in voyage_dict){
 				console.log(key,':',voyage_dict[key])
@@ -448,7 +449,7 @@ function noon_date(noon_id){
 		}
 	})
 }
-window_height = $(window).height();
+window_height = ($(window).height()-200);
 $('#voyage_details').css('height',window_height)
 $('#ship_entry').css('height',window_height)
 $('#ships_enrolled').css('height',window_height)
