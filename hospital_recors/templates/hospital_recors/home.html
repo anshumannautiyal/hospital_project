@@ -13,8 +13,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    
-	<title>Welcome</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<title>ProjectOne</title>
 </head>
 <style type="text/css">
 .project{
@@ -150,17 +151,17 @@
 			  	<div class="col-lg-12 col-md-12 col-sm-12 form-control" style="margin-top: 40px">
 			  		<label>Ship</label>
 			  		<select id="select_ship_vd" class="chosen-select">
-			  			<option>Select Ship</option>
+			  			<option value="0">Select Ship</option>
 			  			{%for ship in ship_obj%}
 			  			<option value={{ship.id}}>{{ship.name}}</option>
 			  			{%endfor%}
 			  		</select>
 			  		<label>Voyage No</label>
 			  		<select id="select_voyage_vd" class="chosen-select">
-			  			<option>Select Voyage</option>
+			  			<option value='0'>Select Voyage</option>
 			  		</select>
 			  		<div>
-			  		<button class="btn" id="noon_date_vd_submit" style="background-color: blue; padding-top: 0px;padding-bottom:0px;margin-left: 5px;color:white">Click to view noon report</button>
+			  		<button class="btn" id="noon_date_vd_submit" style="background-color: blue; padding-top: 0px;padding-bottom:0px;margin-left: 5px;color:white">Click To View Voyage</button>
 			  		</div>
 			  	</div>
 			  	<div class="col-lg-12 col-sm-12 col-md-12 form-control" style="display: none;margin-top: 40px" id="noon_table_div" > 
@@ -261,10 +262,11 @@ $(document).on('click','#enroll_new_ship',function(){
 	// ship_name = $('#ship_name').val()
 	// voyage_no = $('#').val()
 	if ($('#ship_name').val() == ''){
-		alert('Enter Ship Name')
+
+		sweetAlert('Enter Ship Name')
 	}
 	else if($('#last_service').val() == ''){
-		alert('Enter Last Service Date')
+		sweetAlert('Enter Last Service Date')
 	}
 	else{
 		console.log($('#ship_name').val(),"ship name value")
@@ -277,9 +279,9 @@ $(document).on('click','#enroll_new_ship',function(){
 
 		url:'/open',
 		success:function(data){
-			alert('Ship Enrolled')
+			SweetAlert('Ship Enrolled')
 			// location.reload()
-			window.open('/open','_self')
+			// window.open('/open','_self')
 		},
 		error:function(err){
 			alert(JSON.stringify(err))
@@ -290,12 +292,11 @@ $(document).on('click','#enroll_new_ship',function(){
 $(document).on('click','#make_voyage',function(){
 	ship_id = $('#select_voy_ship').val()
 	voyage_no = $('#voyage_no').val()
-	alert('vopyaes')
 	if (ship_id == '0'){
-		alert('Select Ship')
+		sweetAlert('Select Ship')
 	}
 	else if(voyage_no == ''){
-		alert('Enter Voyage No')
+		sweetAlert('Enter Voyage No')
 	}
 	else{
 	$.ajax({
@@ -306,8 +307,8 @@ $(document).on('click','#make_voyage',function(){
 		},
 		url:'/open',
 		success:function(data){
-			alert('done')
-			window.open('/open','_self')
+			SweetAlert('done')
+			// window.open('/open','_self')
 		},
 		error:function(err){
 			console.log((err))
@@ -317,6 +318,20 @@ $(document).on('click','#make_voyage',function(){
 })	
 $(document).on('click','#noon_date_vd_submit',function(){
 	// alert('hey')
+	if ($('#select_ship_vd').val() == '0' ){
+		sweetAlert('Select Ship')
+	}
+	else if($('#select_voyage_vd').val() == '0'){
+		sweetAlert('Select Voyage No')
+	}
+	else{
+	Swal.fire({
+  // position: 'top-end',
+  icon: 'success',
+  title: 'Your Voyage Data Has Been Loaded',
+  showConfirmButton: false,
+  timer: 1500
+})
 	$('#radio').empty()
 	$('#radio_date').empty()
 	$('#noon_table').css('display','')
@@ -345,6 +360,9 @@ $(document).on('click','#noon_date_vd_submit',function(){
 
 		}
 	})
+
+	}
+	
 
 })
 $(document).on('change','#select_ship',function(){
@@ -395,25 +413,25 @@ $(document).on('change','#select_ship_vd',function(){
 })
 $(document).on('click','#make_noon',function(){
 	if($('#select_ship').val() == 0){
-		alert('Select Ship')
+		sweetAlert('Select Ship')
 	}
 	else if ($('#select_voyage').val() == 0){
-		alert('Select Voyage')
+		sweetAlert('Select Voyage')
 	}
 	else if($('#noon_date').val() == ''){
-		alert('Enter Date')
+		sweetAlert('Enter Date')
 	}
 	else if($('#speed').val() == ''){
-		alert('Enter Speed')
+		sweetAlert('Enter Speed')
 	}
 	else if ($('#cons').val() == ''){
-		alert('Enter Consumptions')
+		sweetAlert('Enter Consumptions')
 	}
 	else if($('#currents').val() == ''){
-		alert('Enter Currents')
+		sweetAlert('Enter Currents')
 	}
 	else if($('#winds').val() == ''){
-		alert('Enter Winds')
+		sweetAlert('Enter Winds')
 	}
 	else{
 	$.ajax({
@@ -428,7 +446,7 @@ $(document).on('click','#make_noon',function(){
 			speed 		   : $('#speed').val(),
 		},
 		success:function(data){
-			alert('done')
+			SweetAlert('done')
 		},
 		error:function(err){
 
@@ -481,4 +499,22 @@ $('#voyage_details').css('height',window_height)
 $('#ship_entry').css('height',window_height)
 $('#ships_enrolled').css('height',window_height)
 $('#ideal_cons').css('height',window_height)
+function sweetAlert(title){
+swal({
+  title: title,
+  text: "",
+  icon: "warning",
+  showCancelButton:'True',
+})
+}
+function SweetAlert(title){
+swal({
+  title: title,
+  // text: "Login Successfull !",
+  icon: "success",
+  button: "Ok",
+}).then(function() {
+	window.open('/open',"_self")
+});	
+}
 </script>

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style type="text/css">
 	@import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
@@ -183,11 +183,23 @@ body{
 				// alert(data)
 				data = JSON.parse(data)
 				if (data==false){
-					alert('Enter Valid Username/Password')
+					swal({
+					  title: "Enter Valid Username/Password",
+					  text: "",
+					  icon: "warning",
+					  showCancelButton:'True',
+					})
+					
 				}
 				else{
-					alert('Welcome')
-					window.open('/open',"_self")
+					swal({
+					  title: "Welcome!",
+					  text: "Login Successfull !",
+					  icon: "success",
+					  button: "Click to Enter",
+					}).then(function() {
+    				window.open('/open',"_self")
+					});				
 				}
 			},
 			error:function(err){
@@ -195,4 +207,9 @@ body{
 			},
 		})
 	})
+
+function sleep(milliseconds) {
+const start = Date.now();
+while (Date.now() - start < milliseconds);
+}
 </script>
