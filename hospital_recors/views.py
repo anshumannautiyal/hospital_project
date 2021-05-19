@@ -5,7 +5,16 @@ from . import models
 import json
 # import JsonResponse
 # Create your views here.
+is_auth = False
 def open(request):
+	if 'username' in request.GET:
+		username = request.GET['username']
+		password = request.GET['password']
+		print "=====worinkngknnsad"
+		login = [username,password]
+		is_auth = check_authentication(login)
+		return HttpResponse(json.dumps(is_auth))
+
 	if 'ship_name' in request.GET:
 		ship_name = request.GET['ship_name']
 		last_service = request.GET['last_service']
@@ -73,7 +82,7 @@ def open(request):
 	comp_dict = compare()
 	context['comp_dict'] = comp_dict
 	return render_to_response('hospital_recors/home.html',context)
-
+	# return HttpResponse('no')
 def make_new_voyage(ship_id,voyage_no):
 	voyage = models.ship_voyage()
 	voyage.ship = models.ship_record.objects.filter(id=ship_id)[0]
@@ -85,18 +94,31 @@ def make_new_voyage(ship_id,voyage_no):
 
 def compare():
 	cons_dict={
-	'7.0':'18',
-	'8.0': '18',
-	'9.0': '19',
-	'10.0':'21',
-	'11.0':'22',
-	'12.0':'25',
-	'12.0':'25',
-	'13.0':'27',
-	'14.0':'29',
-	'15.0':'31',
-	'16.0':'37',
-	'17.0':'41',
+	7.0:'18',
+	8.0: '18',
+	9.0: '19',
+	10.0:'21',
+	11.0:'22',
+	12.0:'25',
+	12.0:'25',
+	13.0:'27',
+	14.0:'29',
+	15.0:'31',
+	16.0:'37',
+	17.0:'41',
 	}
 	
 	return cons_dict
+
+# authentication = False
+def index(request):
+	return render_to_response('hospital_recors/login_page.html')
+
+def check_authentication(request):
+	login_cridetials={
+	'Anshuman':'Password',
+	}
+	if request[0] in login_cridetials and login_cridetials[request[0]] == request[1]:
+		return True
+	else:
+		return False

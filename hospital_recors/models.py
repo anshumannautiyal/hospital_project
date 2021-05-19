@@ -42,4 +42,8 @@ class noon_report(models.Model):
 	winds = models.TextField(null=True)
 	def __str__(self):
 		return self.id
+
+# class users(models.Model):
+# 	username = models.TextField(null=False)
+# 	password = models.TextField(null=False)
 	

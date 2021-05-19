@@ -18,6 +18,7 @@ from django.contrib import admin
 from hospital_recors import views
 urlpatterns = patterns('',
     # url(r'^admin'),
+    url(r'^index',views.index,name='index'),
 	url(r'^open',views.open,name='open'),
     url(r'^make_new_voyage',views.make_new_voyage,name='make_new_voyage'),
 
