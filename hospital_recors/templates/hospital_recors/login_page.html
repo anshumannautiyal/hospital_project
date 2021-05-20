@@ -171,6 +171,7 @@ body{
 	$(document).on('click','#login_button',function(){
 		username = $('#username').val()
 		password = $('#password').val()
+
 		$.ajax({
 			type:'GET',
 			data:{
@@ -198,7 +199,7 @@ body{
 					  icon: "success",
 					  button: "Click to Enter",
 					}).then(function() {
-    				window.open('/open',"_self")
+    				window.open('/open'+encodeURI(username = btoa('=='+$('#username').val()+'--'+$('#password').val()+"==")),"_self",)
 					});				
 				}
 			},

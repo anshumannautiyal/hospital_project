@@ -254,6 +254,13 @@
 
 <script type="text/javascript">
 $(document).ready( function () {
+
+// alert(Request.QueryString["username"])
+var location = (window.location.href)
+var new_str=""
+var index=location.indexOf('open')
+alert(index)
+(new_str)
 $('#ship_table').DataTable();
 $('#cons_table').DataTable();
 $('#noon_table').DataTable();
