@@ -6,7 +6,8 @@ from hospital_recors import views
 # for example on opening loacalhost:8000/index we call index function which is inside views.py file
 urlpatterns = patterns('',
     # url(r'^admin'),
-    url(r'^index',views.index,name='index'),
+    url(r'^$',views.index,name='login'),
+    # url(r'^index',views.index,name='index'),
 	url(r'^open',views.open,name='open'),
     url(r'^make_new_voyage',views.make_new_voyage,name='make_new_voyage'),
 	)
