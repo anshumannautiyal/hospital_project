@@ -13,7 +13,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style type="text/css">
-	@import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
 
 body{
@@ -178,10 +178,8 @@ body{
 				username:username,
 				password:password,
 			},
-			// dataType:''
 			url:'/open',
 			success:function(data){
-				// alert(data)
 				data = JSON.parse(data)
 				if (data==false){
 					swal({
@@ -199,7 +197,7 @@ body{
 					  icon: "success",
 					  button: "Click to Enter",
 					}).then(function() {
-    				window.open('/open'+encodeURI(username = btoa('=='+$('#username').val()+'--'+$('#password').val()+"==")),"_self",)
+    				window.open('/open'+encodeURI(username = btoa('=='+$('#username').val()+'--'+$('#password').val())),"_self",)
 					});				
 				}
 			},

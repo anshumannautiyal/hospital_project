@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- JavaScript Bundle with Popper -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
@@ -15,8 +13,10 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <title>ProjectOne</title>
 </head>
+
 <style type="text/css">
 .project{
 	/*float: left;*/
@@ -245,7 +245,6 @@
 	</table>
 	
 		<div class="col-lg-1">
-			<!-- {{ship_obj}} -->
 		</div>
 </body>
 </html>
@@ -254,22 +253,45 @@
 
 <script type="text/javascript">
 $(document).ready( function () {
-
-// alert(Request.QueryString["username"])
 var location = (window.location.href)
 var new_str=""
-var index=location.indexOf('open')
-alert(index)
-(new_str)
+var index1=location.indexOf('open')
+var index2=location.indexOf('==')
+for (i=index1+4;i<location.length;++i){
+	new_str+=location.charAt(i)
+}
+var decoded_url=atob(new_str);
+index_d=decoded_url.indexOf('--')
+usern=(decoded_url.substring(2,index_d))
+passw=(decoded_url.substring(index_d+2,decoded_url.length))
+$.ajax({
+	url:'/open',
+	type:'get',
+	data:{
+		username:usern,
+		password:passw,
+	},
+	success:function(data){
+		if (data=='false'){
+		  swal({
+		  title: 'You Must Login',
+		  icon: "warning",
+		  button: "Ok",
+		}).then(function() {
+		  window.open('/index',"_self")
+		});	
+		}
+	},
+	error:function(err){
+		conosle.log(err)
+	},
+})
 $('#ship_table').DataTable();
 $('#cons_table').DataTable();
 $('#noon_table').DataTable();
 } );
 $(document).on('click','#enroll_new_ship',function(){
-	// ship_name = $('#ship_name').val()
-	// voyage_no = $('#').val()
 	if ($('#ship_name').val() == ''){
-
 		sweetAlert('Enter Ship Name')
 	}
 	else if($('#last_service').val() == ''){
@@ -287,8 +309,6 @@ $(document).on('click','#enroll_new_ship',function(){
 		url:'/open',
 		success:function(data){
 			SweetAlert('Ship Enrolled')
-			// location.reload()
-			// window.open('/open','_self')
 		},
 		error:function(err){
 			alert(JSON.stringify(err))
@@ -315,7 +335,6 @@ $(document).on('click','#make_voyage',function(){
 		url:'/open',
 		success:function(data){
 			SweetAlert('done')
-			// window.open('/open','_self')
 		},
 		error:function(err){
 			console.log((err))
@@ -324,7 +343,6 @@ $(document).on('click','#make_voyage',function(){
 	}
 })	
 $(document).on('click','#noon_date_vd_submit',function(){
-	// alert('hey')
 	if ($('#select_ship_vd').val() == '0' ){
 		sweetAlert('Select Ship')
 	}
@@ -333,12 +351,11 @@ $(document).on('click','#noon_date_vd_submit',function(){
 	}
 	else{
 	Swal.fire({
-  // position: 'top-end',
-  icon: 'success',
-  title: 'Your Voyage Data Has Been Loaded',
-  showConfirmButton: false,
-  timer: 1500
-})
+	  icon: 'success',
+	  title: 'Your Voyage Data Has Been Loaded',
+	  showConfirmButton: false,
+	  timer: 1500
+	})
 	$('#radio').empty()
 	$('#radio_date').empty()
 	$('#noon_table').css('display','')
@@ -354,7 +371,6 @@ $(document).on('click','#noon_date_vd_submit',function(){
 		data:{
 			voyage_id_vd : $('#select_voyage_vd').val()
 		},
-		// datatype:json,
 		success:function(data){
 			data=JSON.parse(data)
 			console.log(data)
@@ -364,7 +380,7 @@ $(document).on('click','#noon_date_vd_submit',function(){
 			}
 		},
 		error:function(err){
-
+			console.log(err)
 		}
 	})
 
@@ -374,7 +390,6 @@ $(document).on('click','#noon_date_vd_submit',function(){
 })
 $(document).on('change','#select_ship',function(){
 	ship_id = $('#select_ship').val()
-	// alert('alsidh')
 	$.ajax({
 		url:'/open',
 		type:'get',
@@ -391,7 +406,7 @@ $(document).on('change','#select_ship',function(){
 			}
 		},	
 		error:function(err){
-
+			console.log(err)
 		},
 	})
 })
@@ -406,7 +421,6 @@ $(document).on('change','#select_ship_vd',function(){
 			ship_id_noon :ship_id,
 		},
 		success:function(data){
-			// alert('lbass')
 			var voyage_dict = JSON.parse(data)
 			for (var key in voyage_dict){
 				console.log(key,':',voyage_dict[key])
@@ -414,7 +428,7 @@ $(document).on('change','#select_ship_vd',function(){
 			}
 		},	
 		error:function(err){
-
+			console.log(err)
 		},
 	})
 })
@@ -456,7 +470,7 @@ $(document).on('click','#make_noon',function(){
 			SweetAlert('done')
 		},
 		error:function(err){
-
+			conosle.log(err)
 		},
 
 	})
@@ -473,7 +487,6 @@ function noon_date(noon_id){
 		},
 		success:function(data){
 			data = JSON.parse(data)
-			// for(var key in data){
 			console.log(data['speed'],"=====")
 			var cons = parseInt(data['cons'])
 			var good_cons = parseInt(data['good_cons'])
@@ -494,10 +507,9 @@ function noon_date(noon_id){
 				$('#good_speed_cons_vd').html(data['good_cons'])
 				$('#currents_vd').html(data['currents'])
 				$('#winds_vd').html(data['winds'])
-			// }
 		},
-		error:function(data){
-
+		error:function(err){
+			console.log(err)
 		}
 	})
 }
@@ -507,21 +519,20 @@ $('#ship_entry').css('height',window_height)
 $('#ships_enrolled').css('height',window_height)
 $('#ideal_cons').css('height',window_height)
 function sweetAlert(title){
-swal({
-  title: title,
-  text: "",
-  icon: "warning",
-  showCancelButton:'True',
-})
+	swal({
+	  title: title,
+	  text: "",
+	  icon: "warning",
+	  showCancelButton:'True',
+	})
 }
 function SweetAlert(title){
-swal({
-  title: title,
-  // text: "Login Successfull !",
-  icon: "success",
-  button: "Ok",
-}).then(function() {
-	window.open('/open',"_self")
-});	
+	swal({
+	  title: title,
+	  icon: "success",
+	  button: "Ok",
+	}).then(function() {
+	  window.open('/open',"_self")
+	});	
 }
 </script>
